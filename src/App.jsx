@@ -1,67 +1,41 @@
-import { useState } from "react"
+import { useState } from "react";
 
 export const App = () => {
-  // Aqui va toda la logica para mandar al RETURN
+  const urlBase = 'https://randomuser.me/api';
+  const [usuarios, setUsuarios] = useState([]);
 
-  const urlBase = 'https://freetestapi.com/api/v1/movies'
-  // const API_KEY = '' solo se usa para las APIs con controles de uso
-
-  // useState modifica la "variable" que contiene un estado inmutable, solo se puede cambiar con "setVariable"
-  const [busqueda, setBusqueda] = useState('')
-  const [peliculas, setPeliculas] = useState([])
-
-  // El "evento" (e) pasa el "valor" del "evento" del "objetivo" "e.taget.value" a "setVariable"
-  const handleInputChange = (e) => {
-    setBusqueda(e.target.value)
-
-  }
-
-  // Manejando el comportamiento del formulario
-  // prevenir que el formulario recague la pagina y usar el fetch para la API
   const handleSubmit = (e) => {
-    e.preventDefault()
-    fetchPeliculas()
+    e.preventDefault();
+    fetchUsuarios();
+  };
 
-  }
-
-  // Manejo de la API
-
-  const fetchPeliculas = async () =>{
+  const fetchUsuarios = async () => {
     try {
-      // Solicitamos los datos a la URL de la API
-      const response = await fetch(`${urlBase}?search=${busqueda}`)
-      const data = await response.json()
-      setPeliculas(data)
-
+      const response = await fetch(urlBase);
+      const data = await response.json();
+      setUsuarios(data.results); // Asegúrate de obtener la propiedad 'results'
     } catch (error) {
-      console.error('Ocurrio un error',error)
-      
+      console.error('Ocurrió un error', error);
     }
-
-  }
-
-
+  };
 
   return (
     <div className="container">
-      {/* Aqui se pinta el JSX para el DOM */}
-      <h1>Buscador de Pelis</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="search" id="search" value={busqueda} onChange={handleInputChange} autoComplete="off" placeholder="Ingresa el nombre de la pelicula"/>
-        <button type="submit">Buscar</button>
-      </form>
-
+      <h1>Generador de Usuarios Aleatorios</h1>
+      <button type="button" onClick={handleSubmit}>Generar</button>
       <div>
-      {peliculas.map((pelicula) => (
-          <div key={pelicula.id}>
-            <h2>{pelicula.title}</h2>
-            <p>{pelicula.plot}</p>
-
+        {usuarios.map((usuario, index) => (
+          <div key={index}>
+            <h2>Nombre: {usuario.name.first} {usuario.name.last}</h2>
+            <h4>Edad: {usuario.dob.age} años</h4>
+            <img src={usuario.picture.large} alt="User thumbnail" />
+            <p><strong>Pais: </strong>{usuario.location.country}</p>
+            <p><strong>Ciudad: </strong>{usuario.location.city}</p>
+            <p><strong>Calle: </strong>{usuario.location.street.name} #{usuario.location.street.number}</p>
+            <p><strong>Email: </strong>{usuario.email} <strong>Password: </strong>{usuario.login.username}</p>
           </div>
         ))}
-
       </div>
-
     </div>
-  )
-}
+  );
+};
