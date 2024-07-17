@@ -32,7 +32,7 @@ export const App = () => {
             <p><strong>Pais: </strong>{usuario.location.country}</p>
             <p><strong>Ciudad: </strong>{usuario.location.city}</p>
             <p><strong>Calle: </strong>{usuario.location.street.name} #{usuario.location.street.number}</p>
-            <p><strong>Email: </strong>{usuario.email} <strong>Password: </strong>{usuario.login.username}</p>
+            <p><strong>E-mail: </strong>{usuario.email} <strong>Password: </strong>{usuario.login.username}</p>
           </div>
         ))}
       </div>
