@@ -8,28 +8,24 @@
 }
 
 :root{
-  --bg-color: #1E1E24;
-  --bg-color-2: #F4FFF8;
-  --bg-color-3: #2176FF;
-  --border-color: aqua;
-  --border-color-2: black;
-  --text-color: white;
-  --text-color-2: black;
+  --color-1: #1E1E24;
+  --color-2: #F4FFF8;
+  --color-3: #2176FF;
+  --color-4: #0ef;
+  --color-5: #000;
 }
 
 body{
-  color: var(--text-color);
+  color: var(--color-2);
   text-align: center;
   height: 100vh;
-  background-color: var(--bg-color);
 }
 
 nav{
   border-radius: 5px;
   padding: 1rem;
   margin-bottom: 2rem;
-  text-shadow: 0 0 5px var(--text-color-2);
-  background-color: var(--bg-color-3);
+  background-color: var(--color-5);
 }
 
 .container *{
@@ -37,21 +33,35 @@ nav{
 }
 
 .container{
+  position: relative;
   display: grid;
   place-items: center;
-  width: clamp(300px, 50%, 400px);
+  width: clamp(300px, 50%, 300px);
   margin: 3rem auto;
-  background-color: var(--bg-color-2);
+  background-color: var(--color-5);
   border-radius: 10px;
-  padding: 5px;
+  padding: 4px;
+  overflow: hidden;
+  z-index: -2;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  height: 150%;
+  width: 100px;
+  background-color: var(--color-4);
+  /* background: linear-gradient(90deg, transparent 0%, var(--color-4) 100%); */
+  animation: rotate 2s linear infinite;
+  z-index: -1;
 }
 
 .infoCard {
-  padding: 10px;
+  /* display: none; */
+  padding: 20px;
   text-align: left;
-  color: var(--text-color-2);
-  border: 4px solid var(--border-color-2);
-  background-color: var(--bg-color-3);
+  color: var(--color-2);
+  background-color: var(--color-1);
 }
 
 .imgContent{
@@ -61,17 +71,27 @@ nav{
 }
 
 .btn{
-  color: var(--bg-color-3);
+  color: var(--color-2);
   font-size: 1rem;
   font-weight: bold;
-  letter-spacing: 2px;
-  padding: 5px 10px;
-  border: 2px solid var(--bg-color-3);
+  letter-spacing: 1px;
+  padding: 5px 20px;
+  border: transparent;
   border-radius: 10px;
-  background-color: transparent;
+  background-color: var(--color-3);
   transition: .1s ease;
 }
 
 .btn:active{
   transform: scale(0.95);
+}
+
+@keyframes rotate {
+  from {
+      transform: rotate(0deg);
+  }
+
+  to {
+      transform: rotate(360deg);
+  }
 }
